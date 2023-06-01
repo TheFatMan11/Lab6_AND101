@@ -120,6 +120,15 @@ public class Adapter_sinhvien extends AppCompatActivity {
                     }
                 });
 
+                update.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Adapter_sinhvien.this,MainActivity.class);
+
+                        getData.launch(intent);
+                    }
+                });
+
 
 
 

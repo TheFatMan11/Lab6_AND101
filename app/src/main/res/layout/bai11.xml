@@ -16,6 +16,7 @@
         tools:ignore="MissingConstraints">
 
         <TextView
+            android:id="@+id/tv_tieude"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Thêm sinh viên"
@@ -59,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="8"
                 android:background="@drawable/modle"
-                android:inputType="textPassword"
+
                 android:hint="Hãy nhâp địa chỉ"
                 />
         </LinearLayout>

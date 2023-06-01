@@ -70,6 +70,8 @@ public class bai31 extends AppCompatActivity {
                 if(aa.equals(a)&&bb.equals(b)){
                    Intent intent = new Intent(bai31.this,Adapter_sinhvien.class);
                    startActivity(intent);
+                }else {
+                    Toast.makeText(bai31.this, "Sai tài khoản hoặc mật khẩu", Toast.LENGTH_SHORT).show();
                 }
             }
         });

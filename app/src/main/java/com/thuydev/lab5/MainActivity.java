@@ -51,7 +51,11 @@ public class MainActivity extends AppCompatActivity {
                 bundle.putString("coSo",sCoSo);
                 intent.putExtras(bundle);
                 setResult(2,intent);
-                finish();
+               if(!sTen.equals("")&&!sDiachi.equals("")&&!sCoSo.equals("")){
+                   finish();
+               }else {
+                   Toast.makeText(MainActivity.this, "Vui lòng nhập đủ thông tin", Toast.LENGTH_SHORT).show();
+               }
 
 
             }
