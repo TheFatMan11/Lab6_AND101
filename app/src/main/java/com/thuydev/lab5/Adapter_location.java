@@ -18,8 +18,11 @@ public class Adapter_location extends BaseAdapter {
         this.activity = activity;
         this.List = List;
     }
-
-
+    public static final String KEY_SV = "update";
+    public static final String KEY_List = "ds";
+    public static final String KEY_TEN = "ten";
+    public static final String KEY_DIACHI = "diachi";
+    public static final String KEY_COSO = "coso";
     @Override
     public int getCount() {
         return List.size();

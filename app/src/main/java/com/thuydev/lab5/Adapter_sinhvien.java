@@ -29,6 +29,29 @@ public class Adapter_sinhvien extends AppCompatActivity {
     String ten ="1";
     String diaChi="1";
     String coSo = "1";
+
+    ActivityResultLauncher<Intent> updateSV = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                if(result.getResultCode()==2){
+                    Intent intent = result.getData();
+                    Bundle bundle = intent.getExtras();
+
+                    String ten = bundle.getString(Adapter_location.KEY_TEN);
+                    String diaDiem = bundle.getString(Adapter_location.KEY_DIACHI);
+                    String coSo = bundle.getString(Adapter_location.KEY_COSO);
+
+                    svmo.setName( ten);
+                    svmo.setLocation(diaDiem);
+                    svmo.setCoSo(coSo);
+
+                    adtnn.notifyDataSetChanged();
+                }
+                }
+            }
+    );
     ActivityResultLauncher <Intent> getData = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
@@ -37,11 +60,11 @@ public class Adapter_sinhvien extends AppCompatActivity {
                     if(result.getResultCode()==2){
                         Intent intent = result.getData();
                         Bundle bundle = intent.getExtras();
-                        ten=bundle.getString("ten");
-                        diaChi=bundle.getString("location");
-                        coSo=bundle.getString("coSo");
+                        ten=bundle.getString(Adapter_location.KEY_TEN);
+                        diaChi=bundle.getString(Adapter_location.KEY_DIACHI);
+                        coSo=bundle.getString(Adapter_location.KEY_COSO);
 
-                        ds.add(new modle_sinhvien("Họ Tên: "+ten,"Địa chỉ: "+diaChi,"Fpoly: "+coSo));
+                        ds.add(new modle_sinhvien(ten,diaChi,coSo));
                         adtnn = new ADTNN(Adapter_sinhvien.this,ds);
                         lv_sv.setAdapter(adtnn);
 
@@ -63,6 +86,10 @@ public class Adapter_sinhvien extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Adapter_sinhvien.this,MainActivity.class);
+                Intent intent1 = new Intent(Adapter_sinhvien.this,MainActivity.class);
+
+                intent.putExtra("update","Thêm sinh viên");
+                setResult(2,intent1);
                 getData.launch(intent);
             }
         });
@@ -70,6 +97,7 @@ public class Adapter_sinhvien extends AppCompatActivity {
 
 
     }
+    private modle_sinhvien svmo;
     private class ADTNN extends BaseAdapter{
         Activity activity;
         ArrayList<modle_sinhvien> sv ;
@@ -100,16 +128,16 @@ public class Adapter_sinhvien extends AppCompatActivity {
             LayoutInflater inflater = activity.getLayoutInflater();
             convertView =inflater.inflate(R.layout.modle_ds,parent,false);
 
-            modle_sinhvien svModle =sv.get(position);
+            final modle_sinhvien[] svModle = {sv.get(position)};
             TextView tvName =convertView.findViewById(R.id.tv_hoTen);
             TextView tvdiachi =convertView.findViewById(R.id.tv_diaChi);
             TextView tvCoSo =convertView.findViewById(R.id.tv_coSo);
             Button xoa = convertView.findViewById(R.id.btn_delete);
             Button update = convertView.findViewById(R.id.btn_update);
 
-            tvName.setText(svModle.getName());
-            tvdiachi.setText(svModle.getLocation());
-            tvCoSo.setText(svModle.getCoSo());
+            tvName.setText(svModle[position].getName());
+            tvdiachi.setText(svModle[position].getLocation());
+            tvCoSo.setText(svModle[position].getCoSo());
 
 
                 xoa.setOnClickListener(new View.OnClickListener() {
@@ -124,8 +152,15 @@ public class Adapter_sinhvien extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(Adapter_sinhvien.this,MainActivity.class);
+                      
+                        intent.putExtra(Adapter_location.KEY_SV,"Sửa sinh viên");
+                        setResult(2,intent);
+                    svmo = sv.get(position);
+                    intent.putExtra(Adapter_location.KEY_List,svmo);
+                    updateSV.launch(intent);
 
-                        getData.launch(intent);
+
+
                     }
                 });
 

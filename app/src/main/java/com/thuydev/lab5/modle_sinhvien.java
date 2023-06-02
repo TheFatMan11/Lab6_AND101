@@ -1,6 +1,8 @@
 package com.thuydev.lab5;
 
-public class modle_sinhvien {
+import java.io.Serializable;
+
+public class modle_sinhvien  implements Serializable {
 private String name;
 private String location;
 private String coSo;

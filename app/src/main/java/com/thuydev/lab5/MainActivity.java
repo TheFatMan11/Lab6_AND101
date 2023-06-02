@@ -1,5 +1,9 @@
 package com.thuydev.lab5;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -10,19 +14,21 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-
+    Spinner spinner;
+    int bien=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bai11);
 
         ArrayList<modle_location> location1 = new ArrayList<>();
-        Spinner spinner = findViewById(R.id.sp_Location);
+         spinner = findViewById(R.id.sp_Location);
 
         location1.add(new modle_location("Hà nội",R.drawable.logo_ha_noi));
         location1.add(new modle_location("Hồ chí minh",R.drawable.hcm_icn));
@@ -36,6 +42,20 @@ public class MainActivity extends AppCompatActivity {
         Button button = findViewById(R.id.btn_login);
         EditText ten = findViewById(R.id.txt_ten);
         EditText diachi = findViewById(R.id.txt_diachia);
+        TextView teuDe = findViewById(R.id.tv_tieude);
+        Intent intent = getIntent();
+
+        String td =intent.getStringExtra(Adapter_location.KEY_SV);
+        teuDe.setText(td);
+
+        modle_sinhvien sv = (modle_sinhvien) getIntent().getSerializableExtra(Adapter_location.KEY_List);
+        if(sv!=null){
+        ten.setText(sv.getName().toString());
+        diachi.setText(sv.getLocation().toString());
+        int i = location1.indexOf(sv.getLocation());
+        spinner.setSelection(i);
+        }
+
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,18 +64,23 @@ public class MainActivity extends AppCompatActivity {
             String sTen = ten.getText().toString();
             String sDiachi = diachi.getText().toString();
             String sCoSo = location1.get(index).getName();
-                Intent intent = new Intent();
-                Bundle bundle = new Bundle();
-                bundle.putString("ten",sTen);
-                bundle.putString("location",sDiachi);
-                bundle.putString("coSo",sCoSo);
-                intent.putExtras(bundle);
-                setResult(2,intent);
-               if(!sTen.equals("")&&!sDiachi.equals("")&&!sCoSo.equals("")){
-                   finish();
-               }else {
-                   Toast.makeText(MainActivity.this, "Vui lòng nhập đủ thông tin", Toast.LENGTH_SHORT).show();
-               }
+
+
+                    Intent intent = new Intent();
+                    Bundle bundle = new Bundle();
+                    bundle.putString(Adapter_location.KEY_TEN,sTen);
+                    bundle.putString(Adapter_location.KEY_DIACHI,sDiachi);
+                    bundle.putString( Adapter_location.KEY_COSO,sCoSo);
+                    intent.putExtras(bundle);
+                    setResult(2,intent);
+                    if(!sTen.equals("")&&!sDiachi.equals("")&&!sCoSo.equals("")){
+                        finish();
+                    }else {
+                        Toast.makeText(MainActivity.this, "Vui lòng nhập đủ thông tin", Toast.LENGTH_SHORT).show();
+                    }
+
+
+
 
 
             }
