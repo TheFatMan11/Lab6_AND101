@@ -135,9 +135,9 @@ public class Adapter_sinhvien extends AppCompatActivity {
             Button xoa = convertView.findViewById(R.id.btn_delete);
             Button update = convertView.findViewById(R.id.btn_update);
 
-            tvName.setText(svModle[position].getName());
-            tvdiachi.setText(svModle[position].getLocation());
-            tvCoSo.setText(svModle[position].getCoSo());
+            tvName.setText(svModle[0].getName());
+            tvdiachi.setText(svModle[0].getLocation());
+            tvCoSo.setText(svModle[0].getCoSo());
 
 
                 xoa.setOnClickListener(new View.OnClickListener() {
@@ -151,6 +151,7 @@ public class Adapter_sinhvien extends AppCompatActivity {
                 update.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
                         Intent intent = new Intent(Adapter_sinhvien.this,MainActivity.class);
                       
                         intent.putExtra(Adapter_location.KEY_SV,"Sửa sinh viên");
