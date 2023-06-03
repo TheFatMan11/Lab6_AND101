@@ -7,6 +7,8 @@ private String name;
 private String location;
 private String coSo;
 
+
+
     public modle_sinhvien() {
     }
 

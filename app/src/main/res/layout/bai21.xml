@@ -6,7 +6,9 @@
     android:padding="10dp"
     android:orientation="vertical"
     tools:ignore="Orientation">
-
+    <include layout="@layout/toolbar"
+        android:id="@+id/toolbar"
+        />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,13 +18,7 @@
         android:textColor="@color/black"
         android:gravity="center"
         />
-    <Button
-        android:id="@+id/btn_add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Thêm mới"
-        android:layout_gravity="center"
-        />
+
     <ListView
         android:id="@+id/lv_list"
         android:layout_width="match_parent"

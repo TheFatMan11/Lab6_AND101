@@ -1,25 +1,35 @@
 package com.thuydev.lab5;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class Adapter_sinhvien extends AppCompatActivity {
@@ -73,34 +83,71 @@ public class Adapter_sinhvien extends AppCompatActivity {
                 }
             }
     );
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId()==R.id.add_persion) {
+            Intent intent = new Intent(Adapter_sinhvien.this,MainActivity.class);
+            Intent intent1 = new Intent(Adapter_sinhvien.this,MainActivity.class);
+
+            intent.putExtra("update","Thêm sinh viên");
+            setResult(2,intent1);
+            getData.launch(intent);
+        }else  if(item.getItemId()==R.id.bangDiem){
+            Toast.makeText(this, "Đang trong quá trình phát triển", Toast.LENGTH_SHORT).show();
+
+        }else if(item.getItemId()== R.id.dangXuat){
+            Intent intent = new Intent(Adapter_sinhvien.this,bai31.class);
+            Toast.makeText(this, "Bạn đã đăng xuất", Toast.LENGTH_SHORT).show();
+            startActivity(intent);
+
+
+            System.exit(0);
+        }else if (item.getItemId()==R.id.dieDanh){
+            Toast.makeText(this, "Đang trong quá trình phát triển", Toast.LENGTH_SHORT).show();
+        } else if (item.getItemId()==R.id.seach) {
+
+        } else if (item.getItemId()==android.R.id.home) {
+            finish();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bai21);
-
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("LAb6");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         lv_sv= findViewById(R.id.lv_list);
-        Button add = findViewById(R.id.btn_add);
 
-        add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Adapter_sinhvien.this,MainActivity.class);
-                Intent intent1 = new Intent(Adapter_sinhvien.this,MainActivity.class);
 
-                intent.putExtra("update","Thêm sinh viên");
-                setResult(2,intent1);
-                getData.launch(intent);
-            }
-        });
+
 
 
 
     }
     private modle_sinhvien svmo;
-    private class ADTNN extends BaseAdapter{
+    private class ADTNN extends BaseAdapter implements Filterable {
         Activity activity;
         ArrayList<modle_sinhvien> sv ;
+        ArrayList<modle_sinhvien> sv1 ;
+
+        public ADTNN(Activity activity, ArrayList<modle_sinhvien> sv, ArrayList<modle_sinhvien> sv1) {
+            this.activity = activity;
+            this.sv = sv;
+            this.sv1 = sv1;
+        }
 
         public ADTNN(Activity activity, ArrayList<modle_sinhvien> sv) {
             this.activity = activity;
@@ -153,7 +200,7 @@ public class Adapter_sinhvien extends AppCompatActivity {
                     public void onClick(View v) {
 
                         Intent intent = new Intent(Adapter_sinhvien.this,MainActivity.class);
-                      
+
                         intent.putExtra(Adapter_location.KEY_SV,"Sửa sinh viên");
                         setResult(2,intent);
                     svmo = sv.get(position);
@@ -169,6 +216,38 @@ public class Adapter_sinhvien extends AppCompatActivity {
 
 
             return convertView;
+        }
+
+        @Override
+        public Filter getFilter() {
+
+            return new Filter() {
+                @Override
+                protected FilterResults performFiltering(CharSequence constraint) {
+                    String s = constraint.toString();
+                    if(s.isEmpty()){
+                        sv=sv1;
+                    }else {
+                        ArrayList<modle_sinhvien> listS = new ArrayList<>();
+                        for(modle_sinhvien a : sv1){
+                            if (a.getName().toLowerCase().contains(s.toLowerCase())){
+                                listS.add(a);
+                            }
+                        }
+                        sv=listS;
+                    }
+                    FilterResults FilterResults = new FilterResults();
+                    FilterResults.values=sv;
+
+                    return FilterResults;
+                }
+
+                @Override
+                protected void publishResults(CharSequence constraint, FilterResults results) {
+                    sv = (ArrayList<modle_sinhvien>) results.values;
+                    notifyDataSetChanged();
+                }
+            };
         }
     }
 }

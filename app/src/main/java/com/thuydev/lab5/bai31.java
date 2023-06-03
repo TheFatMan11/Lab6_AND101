@@ -3,6 +3,8 @@ package com.thuydev.lab5;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,6 +15,7 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 public class bai31 extends AppCompatActivity {
     EditText user;
@@ -43,6 +46,9 @@ public class bai31 extends AppCompatActivity {
 
             }
     );
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +58,7 @@ public class bai31 extends AppCompatActivity {
 
         Button bnt = findViewById(R.id.btn_login);
         Button bnt1 = findViewById(R.id.btn_dk);
+
         bnt1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
