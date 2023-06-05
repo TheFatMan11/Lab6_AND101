@@ -67,14 +67,14 @@ public class bai31 extends AppCompatActivity {
                 getData.launch(intent);
             }
         });
+        String sUser = user.getText().toString();
+        String sPass = pass.getText().toString();
 
         bnt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String aa = user.getText().toString();
-                String bb = pass.getText().toString();
 
-                if(aa.equals(a)&&bb.equals(b)){
+                if(a.equals(sUser)&&b.equals(sPass)){
                    Intent intent = new Intent(bai31.this,Adapter_sinhvien.class);
                    startActivity(intent);
                 }else {

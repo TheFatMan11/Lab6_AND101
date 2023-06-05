@@ -96,7 +96,6 @@ public class Adapter_sinhvien extends AppCompatActivity {
         if(item.getItemId()==R.id.add_persion) {
             Intent intent = new Intent(Adapter_sinhvien.this,MainActivity.class);
             Intent intent1 = new Intent(Adapter_sinhvien.this,MainActivity.class);
-
             intent.putExtra("update","Thêm sinh viên");
             setResult(2,intent1);
             getData.launch(intent);
@@ -104,9 +103,9 @@ public class Adapter_sinhvien extends AppCompatActivity {
             Toast.makeText(this, "Đang trong quá trình phát triển", Toast.LENGTH_SHORT).show();
 
         }else if(item.getItemId()== R.id.dangXuat){
-            Intent intent = new Intent(Adapter_sinhvien.this,bai31.class);
+
             Toast.makeText(this, "Bạn đã đăng xuất", Toast.LENGTH_SHORT).show();
-            startActivity(intent);
+            onBackPressed();
 
 
             System.exit(0);
@@ -127,7 +126,8 @@ public class Adapter_sinhvien extends AppCompatActivity {
         setContentView(R.layout.bai21);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("LAb6");
+        getSupportActionBar().setTitle("Home");
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         lv_sv= findViewById(R.id.lv_list);
 
