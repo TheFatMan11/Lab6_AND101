@@ -18,10 +18,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 public class bai31 extends AppCompatActivity {
-    EditText user;
-    EditText pass;
+
     String a = null;
     String b =null;
+
+
     ActivityResultLauncher getData = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
@@ -29,15 +30,17 @@ public class bai31 extends AppCompatActivity {
                 public void onActivityResult(ActivityResult result) {
 
 
-                       if(result.getResultCode()==1){
+                       if(result.getResultCode()==2){
                            Intent intent = result.getData();
                            Bundle bundle =intent.getExtras();
-                            user = findViewById(R.id.txt_User);
-                            pass = findViewById(R.id.txt_Pass);
+                           EditText user = findViewById(R.id.txt_User);
+                           EditText pass = findViewById(R.id.txt_Pass);
                            a = bundle.getString("user");
                            b = bundle.getString("pass");
-                           user.setText(a);
-                           pass.setText(b);
+                          if(a!=null&&b!=null){
+                               user.setText(a);
+                               pass.setText(b);
+                           }
 
 
 
@@ -58,7 +61,8 @@ public class bai31 extends AppCompatActivity {
 
         Button bnt = findViewById(R.id.btn_login);
         Button bnt1 = findViewById(R.id.btn_dk);
-
+        EditText user = findViewById(R.id.txt_User);
+        EditText pass = findViewById(R.id.txt_Pass);
         bnt1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,16 +71,17 @@ public class bai31 extends AppCompatActivity {
                 getData.launch(intent);
             }
         });
-        String sUser = user.getText().toString();
-        String sPass = pass.getText().toString();
+
 
         bnt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if(a.equals(sUser)&&b.equals(sPass)){
+                String sUser = user.getText().toString();
+                String sPass = pass.getText().toString();
+                if(sUser.equals(a)&&sPass.equals(b)){
                    Intent intent = new Intent(bai31.this,Adapter_sinhvien.class);
                    startActivity(intent);
+
                 }else {
                     Toast.makeText(bai31.this, "Sai tài khoản hoặc mật khẩu", Toast.LENGTH_SHORT).show();
                 }

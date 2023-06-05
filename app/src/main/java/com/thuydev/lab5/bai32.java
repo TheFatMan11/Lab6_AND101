@@ -29,7 +29,7 @@ public class bai32 extends AppCompatActivity {
                 bundle.putString("user", a.getText().toString());
                 bundle.putString("pass", b.getText().toString());
                 intent.putExtras(bundle);
-                setResult(1,intent);
+                setResult(2,intent);
                 finish();
 
 

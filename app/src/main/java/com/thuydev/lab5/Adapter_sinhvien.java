@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -105,15 +106,13 @@ public class Adapter_sinhvien extends AppCompatActivity {
         }else if(item.getItemId()== R.id.dangXuat){
 
             Toast.makeText(this, "Bạn đã đăng xuất", Toast.LENGTH_SHORT).show();
-            onBackPressed();
-
-
-            System.exit(0);
+            finish();
         }else if (item.getItemId()==R.id.dieDanh){
             Toast.makeText(this, "Đang trong quá trình phát triển", Toast.LENGTH_SHORT).show();
         } else if (item.getItemId()==R.id.seach) {
 
         } else if (item.getItemId()==android.R.id.home) {
+
             finish();
         }
 
